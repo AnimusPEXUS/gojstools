@@ -3,7 +3,7 @@ package widgetcollection
 import (
 	"syscall/js"
 
-	"github.com/AnimusPEXUS/wasmtools/elementtreeconstructor"
+	"github.com/AnimusPEXUS/gojstools/elementtreeconstructor"
 )
 
 type Select00 struct {

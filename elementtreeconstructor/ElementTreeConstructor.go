@@ -1,7 +1,7 @@
 package elementtreeconstructor
 
 import (
-	"github.com/AnimusPEXUS/wasmtools/dom"
+	"github.com/AnimusPEXUS/gojswebapi/dom"
 )
 
 type ElementTreeConstructor struct {

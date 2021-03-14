@@ -3,7 +3,7 @@ package widgetcollection
 import (
 	"errors"
 
-	"github.com/AnimusPEXUS/wasmtools/elementtreeconstructor"
+	"github.com/AnimusPEXUS/gojstools/elementtreeconstructor"
 )
 
 type PageId = uint

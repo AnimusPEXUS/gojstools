@@ -3,7 +3,7 @@ package elementtreeconstructor
 import (
 	"syscall/js"
 
-	"github.com/AnimusPEXUS/wasmtools/dom"
+	"github.com/AnimusPEXUS/gojswebapi/dom"
 )
 
 var _ dom.ToNodeConvertable = &ElementMutator{}
