@@ -20,3 +20,7 @@ func StrBoolToBool(value string) bool {
 func JSValueLiteralToPointer(in js.Value) *js.Value {
 	return &[]js.Value{in}[0]
 }
+
+func JSFuncLiteralToPointer(in js.Func) *js.Func {
+	return &[]js.Func{in}[0]
+}
