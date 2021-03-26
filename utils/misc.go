@@ -2,6 +2,7 @@ package misc
 
 import (
 	"strings"
+	"syscall/js"
 )
 
 func StrBoolToBool(value string) bool {
@@ -14,4 +15,8 @@ func StrBoolToBool(value string) bool {
 	}
 
 	return false
+}
+
+func JSValueLiteralToPointer(in js.Value) *js.Value {
+	return &[]js.Value{in}[0]
 }
