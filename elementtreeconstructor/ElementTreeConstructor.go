@@ -40,7 +40,7 @@ func (self *ElementTreeConstructor) CreateElementNS(namespace *string, name stri
 
 func (self *ElementTreeConstructor) ReplaceChildren(new_children []dom.ToNodeConvertable) {
 
-	n := &dom.Node{self.document.Value}
+	n := &dom.Node{self.document.JSValue}
 
 	for i := n.GetFirstChild(); i != nil; i = n.GetFirstChild() {
 		n.RemoveChild(i)

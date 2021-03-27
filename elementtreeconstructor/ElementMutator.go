@@ -3,6 +3,7 @@ package elementtreeconstructor
 import (
 	"syscall/js"
 
+	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 	"github.com/AnimusPEXUS/gojswebapi/dom"
 )
 
@@ -28,7 +29,7 @@ func NewElementMutatorFromElement(e *dom.Element) *ElementMutator {
 }
 
 func NewElementMutatorFromNode(n *dom.Node) *ElementMutator {
-	ret := NewElementMutatorFromElement(&dom.Element{Node: *n})
+	ret := NewElementMutatorFromElement(&dom.Element{Node: n})
 	return ret
 }
 
@@ -89,7 +90,7 @@ func (self *ElementMutator) ExternalUse(cb func(*ElementMutator)) *ElementMutato
 
 func (self *ElementMutator) Call(property string, ret *interface{}, args ...interface{}) *ElementMutator {
 	// log.Println("calling", property)
-	t := self.Element.Node.Value.Call(property, args...)
+	t := self.Element.Node.JSValue.Call(property, args...)
 	if ret != nil {
 		*ret = t
 	}
@@ -111,24 +112,24 @@ func (self *ElementMutator) SetAttribute(name string, value string) *ElementMuta
 //
 
 func (self *ElementMutator) Set(property string, value interface{}) *ElementMutator {
-	self.Element.Node.Value.Set(property, value)
+	self.Element.Node.JSValue.Set(property, value)
 	return self
 }
 
 func (self *ElementMutator) Get(property string) interface{} {
-	return self.Element.Node.Value.Get(property)
+	return self.Element.Node.JSValue.Get(property)
 }
 
-func (self *ElementMutator) GetJsValue(property string) js.Value {
-	return self.Element.Node.Value.Get(property)
+func (self *ElementMutator) GetJsValue(property string) *js.Value {
+	return gojstoolsutils.JSValueLiteralToPointer(self.Element.Node.JSValue.Get(property))
 }
 
-func (self *ElementMutator) SelfJsValue() js.Value {
-	return self.Element.Node.Value
+func (self *ElementMutator) SelfJsValue() *js.Value {
+	return self.Element.Node.JSValue
 }
 
 func (self *ElementMutator) GetAssign(property string, ret *interface{}) *ElementMutator {
-	t := self.Element.Node.Value.Get(property)
+	t := self.Element.Node.JSValue.Get(property)
 	if ret != nil {
 		*ret = t
 	}
@@ -136,7 +137,7 @@ func (self *ElementMutator) GetAssign(property string, ret *interface{}) *Elemen
 }
 
 func (self *ElementMutator) SetStyle(property string, value interface{}) *ElementMutator {
-	self.Element.Node.Value.Get("style").Set(property, value)
+	self.Element.Node.JSValue.Get("style").Set(property, value)
 	return self
 }
 
@@ -144,7 +145,7 @@ func (self *ElementMutator) AddListener(
 	event string,
 	cb func(this js.Value, args []js.Value) interface{},
 ) *ElementMutator {
-	self.Element.Node.Value.Get(event).Call("addListener", js.FuncOf(cb))
+	self.Element.Node.JSValue.Get(event).Call("addListener", js.FuncOf(cb))
 	return self
 }
 
@@ -152,7 +153,7 @@ func (self *ElementMutator) AddEventListener(
 	event string,
 	cb func(this js.Value, args []js.Value) interface{},
 ) *ElementMutator {
-	self.Element.Node.Value.Call("addEventListener", event, js.FuncOf(cb))
+	self.Element.Node.JSValue.Call("addEventListener", event, js.FuncOf(cb))
 	return self
 }
 
