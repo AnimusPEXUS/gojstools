@@ -5,12 +5,12 @@ import (
 )
 
 type ElementTreeConstructor struct {
-	document *dom.Document
+	Document *dom.Document
 }
 
 func NewElementTreeConstructor(document *dom.Document) *ElementTreeConstructor {
 	self := &ElementTreeConstructor{
-		document: document,
+		Document: document,
 	}
 	return self
 }
@@ -18,7 +18,7 @@ func NewElementTreeConstructor(document *dom.Document) *ElementTreeConstructor {
 func (self *ElementTreeConstructor) CreateTextNode(
 	text string,
 ) *dom.Node {
-	return self.document.NewTextNode(text)
+	return self.Document.NewTextNode(text)
 }
 
 func (self *ElementTreeConstructor) CreateElement(name string) *ElementMutator {
@@ -30,9 +30,9 @@ func (self *ElementTreeConstructor) CreateElementNS(namespace *string, name stri
 	var ret *dom.Element
 
 	if namespace != nil {
-		ret = self.document.CreateElementNS(*namespace, name)
+		ret = self.Document.CreateElementNS(*namespace, name)
 	} else {
-		ret = self.document.CreateElement(name)
+		ret = self.Document.CreateElement(name)
 	}
 
 	return NewElementMutatorFromElement(ret)
@@ -40,7 +40,7 @@ func (self *ElementTreeConstructor) CreateElementNS(namespace *string, name stri
 
 func (self *ElementTreeConstructor) ReplaceChildren(new_children []dom.ToNodeConvertable) {
 
-	n := &dom.Node{self.document.JSValue}
+	n := &dom.Node{self.Document.JSValue}
 
 	for i := n.GetFirstChild(); i != nil; i = n.GetFirstChild() {
 		n.RemoveChild(i)
