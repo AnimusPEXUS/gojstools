@@ -4,13 +4,14 @@ import (
 	"errors"
 
 	"github.com/AnimusPEXUS/gojstools/elementtreeconstructor"
+	"github.com/AnimusPEXUS/gojswebapi/dom"
 )
 
 type PageId = uint
 
 type Pager00Page struct {
 	PageId  PageId
-	Element *elementtreeconstructor.ElementMutator
+	Element dom.ToNodeConvertable
 }
 
 type Pager00Settings struct {
@@ -44,7 +45,7 @@ func NewPager00(
 
 func (self *Pager00) SwitchPage(id PageId) error {
 
-	var n *elementtreeconstructor.ElementMutator
+	var n dom.ToNodeConvertable
 
 	for _, i := range self.settings.Pages {
 		if i.PageId == id {
