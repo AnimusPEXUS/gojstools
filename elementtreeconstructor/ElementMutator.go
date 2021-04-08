@@ -124,6 +124,11 @@ func (self *ElementMutator) GetJsValue(property string) *js.Value {
 	return gojstoolsutils.JSValueLiteralToPointer(self.Element.Node.JSValue.Get(property))
 }
 
+func (self *ElementMutator) SetJsValue(property string, value *js.Value) {
+	self.Element.Node.JSValue.Set(property, *value)
+	return
+}
+
 func (self *ElementMutator) SelfJsValue() *js.Value {
 	return self.Element.Node.JSValue
 }
