@@ -1,7 +1,7 @@
 package elementtreeconstructor
 
 import (
-	"github.com/AnimusPEXUS/gojswebapi/dom"
+	"github.com/AnimusPEXUS/gojstools/webapi/dom"
 )
 
 type ElementTreeConstructor struct {

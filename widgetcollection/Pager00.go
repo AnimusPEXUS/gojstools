@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/AnimusPEXUS/gojstools/elementtreeconstructor"
-	"github.com/AnimusPEXUS/gojswebapi/dom"
+	"github.com/AnimusPEXUS/gojstools/webapi/dom"
 )
 
 type PageId = uint

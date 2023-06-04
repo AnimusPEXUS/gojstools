@@ -21,6 +21,7 @@ github.com/AnimusPEXUS/gojswebapi v0.0.0-20210331040814-1a09f9307f8d/go.mod h1:G
 github.com/AnimusPEXUS/gojswebapi v0.0.0-20230604232935-c779cfa1ee95 h1:ymKgsyHwdaNF4yey/TD+ZUz/NdIHLncH72vn1pk9jww=
 github.com/AnimusPEXUS/gojswebapi v0.0.0-20230604232935-c779cfa1ee95/go.mod h1:Vdb8rMSFaB/nbEj4kxVP5dbrt/ikzMtPcuONc5ihNOA=
 github.com/AnimusPEXUS/utils v0.0.0-20210324003110-4bd50c7dd42e/go.mod h1:s9jwdFf7uDEjVkVWVpMEZ0FKuOz6K7WHCvEg8UEf5bo=
+github.com/AnimusPEXUS/utils v0.0.0-20230429235807-5de56d5918ef h1:fXfsWxV4Fgt+NRf5km1bPcBvJVG57edx72QUF7VINq8=
 github.com/AnimusPEXUS/utils v0.0.0-20230429235807-5de56d5918ef/go.mod h1:qEzA426LPDVc5bFqhazSQ8Q3iJP/04/h+VZzbY9BewQ=
 github.com/antchfx/htmlquery v1.2.3/go.mod h1:B0ABL+F5irhhMWg54ymEZinzMSi0Kt3I2if0BLYa3V0=
 github.com/antchfx/htmlquery v1.3.0/go.mod h1:zKPDVTMhfOmcwxheXUsx4rKJy8KEY/PU6eXr/2SebQ8=
