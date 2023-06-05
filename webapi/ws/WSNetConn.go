@@ -11,7 +11,6 @@ import (
 	"syscall/js"
 	"time"
 
-	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 	"github.com/AnimusPEXUS/gojstools/webapi/array"
 	wasmtools_arraybuffer "github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
 	wasmtools_blob "github.com/AnimusPEXUS/gojstools/webapi/blob"
@@ -398,7 +397,7 @@ func (self *WSNetConn) Write(b []byte) (n int, err error) {
 
 	bval, err := array.NewArray(
 		array.ArrayTypeUint8,
-		gojstoolsutils.JSValueLiteralToPointer(js.ValueOf(len(b))),
+		js.ValueOf(len(b)),
 		nil,
 		nil,
 	)
@@ -406,7 +405,7 @@ func (self *WSNetConn) Write(b []byte) (n int, err error) {
 		return
 	}
 
-	js.CopyBytesToJS(*bval.JSValue, b)
+	js.CopyBytesToJS(bval.JSValue, b)
 
 	log.Println("sending...")
 	err = self.options.WS.Send(bval.JSValue)

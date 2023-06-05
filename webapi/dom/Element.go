@@ -9,7 +9,7 @@ type Element struct {
 }
 
 func (self *Element) Append(node *Node) {
-	self.Node.JSValue.Call("append", *node.JSValue)
+	self.Node.JSValue.Call("append", node.JSValue)
 }
 
 func (self *Element) Remove() {

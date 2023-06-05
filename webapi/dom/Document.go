@@ -2,8 +2,6 @@ package dom
 
 import (
 	"syscall/js"
-
-	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 )
 
 type Document struct {
@@ -18,13 +16,11 @@ func NewDocumentFromJsValue(jsvalue js.Value) *Document {
 func (self *Document) CreateElementNS(ns string, name string) *Element {
 	return &Element{
 		&Node{
-			gojstoolsutils.JSValueLiteralToPointer(
-				self.JSValue.Call(
-					"createElementNS",
-					ns,
-					name,
-					js.Undefined(),
-				),
+			self.JSValue.Call(
+				"createElementNS",
+				ns,
+				name,
+				js.Undefined(),
 			),
 		},
 	}
@@ -33,12 +29,10 @@ func (self *Document) CreateElementNS(ns string, name string) *Element {
 func (self *Document) CreateElement(name string) *Element {
 	return &Element{
 		&Node{
-			gojstoolsutils.JSValueLiteralToPointer(
-				self.JSValue.Call(
-					"createElement",
-					name,
-					js.Undefined(),
-				),
+			self.JSValue.Call(
+				"createElement",
+				name,
+				js.Undefined(),
 			),
 		},
 	}
@@ -46,18 +40,14 @@ func (self *Document) CreateElement(name string) *Element {
 
 func (self *Document) NewTextNode(text string) *Node {
 	return &Node{
-		gojstoolsutils.JSValueLiteralToPointer(
-			self.JSValue.Call("createTextNode", text),
-		),
+		self.JSValue.Call("createTextNode", text),
 	}
 }
 
 func (self *Document) GetBody() *Element {
 	return &Element{
 		&Node{
-			gojstoolsutils.JSValueLiteralToPointer(
-				self.JSValue.Get("body"),
-			),
+			self.JSValue.Get("body"),
 		},
 	}
 }

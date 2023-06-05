@@ -3,7 +3,6 @@ package elementtreeconstructor
 import (
 	"syscall/js"
 
-	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 	"github.com/AnimusPEXUS/gojstools/webapi/dom"
 )
 
@@ -120,20 +119,23 @@ func (self *ElementMutator) Get(property string) interface{} {
 	return self.Element.Node.JSValue.Get(property)
 }
 
-func (self *ElementMutator) GetJsValue(property string) *js.Value {
-	return gojstoolsutils.JSValueLiteralToPointer(self.Element.Node.JSValue.Get(property))
+func (self *ElementMutator) GetJsValue(property string) js.Value {
+	return self.Element.Node.JSValue.Get(property)
 }
 
-func (self *ElementMutator) SetJsValue(property string, value *js.Value) {
-	self.Element.Node.JSValue.Set(property, *value)
+func (self *ElementMutator) SetJsValue(property string, value js.Value) {
+	self.Element.Node.JSValue.Set(property, value)
 	return
 }
 
-func (self *ElementMutator) SelfJsValue() *js.Value {
+func (self *ElementMutator) SelfJsValue() js.Value {
 	return self.Element.Node.JSValue
 }
 
-func (self *ElementMutator) GetAssign(property string, ret *interface{}) *ElementMutator {
+func (self *ElementMutator) GetAssign(
+	property string,
+	ret *interface{},
+) *ElementMutator {
 	t := self.Element.Node.JSValue.Get(property)
 	if ret != nil {
 		*ret = t
@@ -141,7 +143,10 @@ func (self *ElementMutator) GetAssign(property string, ret *interface{}) *Elemen
 	return self
 }
 
-func (self *ElementMutator) SetStyle(property string, value interface{}) *ElementMutator {
+func (self *ElementMutator) SetStyle(
+	property string,
+	value interface{},
+) *ElementMutator {
 	self.Element.Node.JSValue.Get("style").Set(property, value)
 	return self
 }

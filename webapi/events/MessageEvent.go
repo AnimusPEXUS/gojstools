@@ -3,7 +3,6 @@ package events
 import (
 	"syscall/js"
 
-	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 	utils_panic "github.com/AnimusPEXUS/utils/panic"
 )
 
@@ -28,7 +27,7 @@ func (self *MessageEvent) GetData() (ret js.Value, err error) {
 	defer func() {
 		err = utils_panic.PanicToError()
 	}()
-	ret = gojstoolsutils.JSValueLiteralToPointer(self.Event.JSValue.Get("data"))
+	ret = self.Event.JSValue.Get("data")
 	return ret, nil
 }
 
@@ -54,7 +53,7 @@ func (self *MessageEvent) GetSource() (ret js.Value, err error) {
 	defer func() {
 		err = utils_panic.PanicToError()
 	}()
-	ret = gojstoolsutils.JSValueLiteralToPointer(self.Event.JSValue.Get("source"))
+	ret = self.Event.JSValue.Get("source")
 	return ret, nil
 }
 
@@ -63,6 +62,6 @@ func (self *MessageEvent) GetPorts() (ret js.Value, err error) {
 	defer func() {
 		err = utils_panic.PanicToError()
 	}()
-	ret = gojstoolsutils.JSValueLiteralToPointer(self.Event.JSValue.Get("ports"))
+	ret = self.Event.JSValue.Get("ports")
 	return ret, nil
 }

@@ -2,8 +2,6 @@ package dom
 
 import (
 	"syscall/js"
-
-	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 )
 
 type ToNodeConvertable interface {
@@ -15,7 +13,7 @@ type Node struct {
 }
 
 func (self *Node) AppendChild(node *Node) *Node {
-	return &Node{gojstoolsutils.JSValueLiteralToPointer(self.JSValue.Call("appendChild", *node.JSValue))}
+	return &Node{self.JSValue.Call("appendChild", node.JSValue)}
 }
 
 func (self *Node) GetFirstChild() *Node {
@@ -24,14 +22,14 @@ func (self *Node) GetFirstChild() *Node {
 
 	r := self.JSValue.Get("firstChild")
 	if !r.IsNull() {
-		ret = &Node{&r}
+		ret = &Node{r}
 	}
 
 	return ret
 }
 
 func (self *Node) RemoveChild(c *Node) *Node {
-	return &Node{gojstoolsutils.JSValueLiteralToPointer(self.JSValue.Call("removeChild", c.JSValue))}
+	return &Node{self.JSValue.Call("removeChild", c.JSValue)}
 }
 
 func (self *Node) ParentNode() *Node {
@@ -39,7 +37,7 @@ func (self *Node) ParentNode() *Node {
 	if t.IsNull() || t.IsUndefined() {
 		return nil
 	}
-	return &Node{&t}
+	return &Node{t}
 }
 
 func (self *Node) ParentElement() *Element {
@@ -47,7 +45,7 @@ func (self *Node) ParentElement() *Element {
 	if t.IsNull() || t.IsUndefined() {
 		return nil
 	}
-	return &Element{&Node{&t}}
+	return &Element{&Node{t}}
 }
 
 func (self *Node) AsNode() *Node {

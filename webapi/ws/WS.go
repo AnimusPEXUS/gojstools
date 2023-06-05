@@ -22,7 +22,7 @@ const (
 type WSOptions struct {
 	URL *string
 	// to use existing ws
-	JSValue   js.Value
+	JSValue   *js.Value
 	Protocols []string
 
 	OnClose   func(*events.CloseEvent)   // function(event)
@@ -32,7 +32,7 @@ type WSOptions struct {
 }
 
 type WS struct {
-	JSValue js.Value
+	JSValue *js.Value
 	options *WSOptions
 }
 
@@ -102,7 +102,7 @@ func (self *WS) SetOnOpen(f func(*events.Event)) (err error) {
 		js.FuncOf(
 			func(this js.Value, args []js.Value) interface{} {
 				if self.options.OnOpen != nil {
-					ev, err := events.NewEventFromJSValue(&args[0])
+					ev, err := events.NewEventFromJSValue(args[0])
 					if err != nil {
 						return nil
 					}
@@ -135,7 +135,7 @@ func (self *WS) SetOnClose(f func(*events.CloseEvent)) (err error) {
 		js.FuncOf(
 			func(this js.Value, args []js.Value) interface{} {
 				if self.options.OnClose != nil {
-					ev, err := events.NewCloseEventFromJSValue(&args[0])
+					ev, err := events.NewCloseEventFromJSValue(args[0])
 					if err != nil {
 						return nil
 					}
@@ -168,7 +168,7 @@ func (self *WS) SetOnMessage(f func(*events.MessageEvent)) (err error) {
 		js.FuncOf(
 			func(this js.Value, args []js.Value) interface{} {
 				if self.options.OnMessage != nil {
-					ev, err := events.NewMessageEventFromJSValue(&args[0])
+					ev, err := events.NewMessageEventFromJSValue(args[0])
 					if err != nil {
 						return nil
 					}
@@ -201,7 +201,7 @@ func (self *WS) SetOnError(f func(*events.ErrorEvent)) (err error) {
 		js.FuncOf(
 			func(this js.Value, args []js.Value) interface{} {
 				if self.options.OnError != nil {
-					ev, err := events.NewErrorEventFromJSValue(&args[0])
+					ev, err := events.NewErrorEventFromJSValue(args[0])
 					if err != nil {
 						return nil
 					}
@@ -257,7 +257,7 @@ func (self *WS) Send(value js.Value) (err error) {
 
 	// log.Println("value v:", v.Call("toString").String())
 
-	self.JSValue.Call("send", *value)
+	self.JSValue.Call("send", value)
 	return
 }
 

@@ -47,7 +47,11 @@ func (self *BlobReader) Read(p []byte) (n int, err error) {
 		}
 	}
 
-	bslc, err := self.blob.Slice(&[]int{self.done}[0], &[]int{end_index}[0], nil)
+	bslc, err := self.blob.Slice(
+		&[]int{self.done}[0],
+		&[]int{end_index}[0],
+		nil,
+	)
 	if err != nil {
 		n = 0 // TODO: is this correct?
 		return
@@ -58,12 +62,15 @@ func (self *BlobReader) Read(p []byte) (n int, err error) {
 		return
 	}
 
-	arr, err := array.NewArray(array.ArrayTypeUint8, ab.JSValue, nil, nil)
+	arr, err := array.NewArray(
+		array.ArrayTypeUint8,
+		ab.JSValue, nil, nil,
+	)
 	if err != nil {
 		return
 	}
 
 	// TODO: probably better error checking needed
-	n = js.CopyBytesToGo(p, *arr.JSValue)
+	n = js.CopyBytesToGo(p, arr.JSValue)
 	return
 }

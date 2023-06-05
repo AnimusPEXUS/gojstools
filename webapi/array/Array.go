@@ -4,14 +4,13 @@ import (
 	"errors"
 	"syscall/js"
 
-	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
 	utils_panic "github.com/AnimusPEXUS/utils/panic"
 )
 
 var ERR_ARRAY_UNSUPPORTED = errors.New("Array unsupported")
 
 func GetArrayJSValue(type_ ArrayType) (js.Value, error) {
-	return gojstoolsutils.JSValueLiteralToPointer(js.Global().Get(type_.String())), nil
+	return js.Global().Get(type_.String()), nil
 }
 
 func DetermineArrayType(v js.Value) *ArrayType {
@@ -71,8 +70,8 @@ type Array struct {
 func NewArray(
 	array_type ArrayType,
 	length_typedArray_object_or_buffer js.Value,
-	byteOffset js.Value,
-	length js.Value,
+	byteOffset *js.Value,
+	length *js.Value,
 ) (self *Array, err error) {
 
 	defer func() {
@@ -92,7 +91,7 @@ func NewArray(
 
 	array_type_s := array_type.String()
 
-	array_type_js := gojstoolsutils.JSValueLiteralToPointer(js.Global().Get(array_type_s))
+	array_type_js := js.Global().Get(array_type_s)
 	if array_type_js.IsUndefined() {
 		return nil, errors.New(array_type_s + " undefined")
 	}
@@ -107,12 +106,10 @@ func NewArray(
 		length = &ud
 	}
 
-	js_array := gojstoolsutils.JSValueLiteralToPointer(
-		array_type_js.New(
-			length_typedArray_object_or_buffer,
-			*byteOffset,
-			*length,
-		),
+	js_array := array_type_js.New(
+		length_typedArray_object_or_buffer,
+		*byteOffset,
+		*length,
 	)
 
 	self, err = NewArrayFromJSValue(js_array)
