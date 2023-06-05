@@ -4,7 +4,7 @@ import (
 	"syscall/js"
 
 	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
-	"github.com/AnimusPEXUS/gojswebapi/dom"
+	"github.com/AnimusPEXUS/gojstools/webapi/dom"
 )
 
 type Window struct {

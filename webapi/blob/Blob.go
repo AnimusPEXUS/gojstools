@@ -5,8 +5,8 @@ import (
 	"syscall/js"
 
 	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
-	"github.com/AnimusPEXUS/gojswebapi/arraybuffer"
-	"github.com/AnimusPEXUS/gojswebapi/promise"
+	"github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
+	"github.com/AnimusPEXUS/gojstools/webapi/promise"
 )
 
 var ERR_BLOB_UNSUPPORTED = errors.New("Blob unsupported")

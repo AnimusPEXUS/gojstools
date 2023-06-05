@@ -4,7 +4,7 @@ import (
 	"io"
 	"syscall/js"
 
-	"github.com/AnimusPEXUS/gojswebapi/array"
+	"github.com/AnimusPEXUS/gojstools/webapi/array"
 )
 
 var _ io.Reader = &ArrayBufferReader{}

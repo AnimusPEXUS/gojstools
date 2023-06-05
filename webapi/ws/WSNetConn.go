@@ -12,10 +12,10 @@ import (
 	"time"
 
 	gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
-	"github.com/AnimusPEXUS/gojswebapi/array"
-	wasmtools_arraybuffer "github.com/AnimusPEXUS/gojswebapi/arraybuffer"
-	wasmtools_blob "github.com/AnimusPEXUS/gojswebapi/blob"
-	"github.com/AnimusPEXUS/gojswebapi/events"
+	"github.com/AnimusPEXUS/gojstools/webapi/array"
+	wasmtools_arraybuffer "github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
+	wasmtools_blob "github.com/AnimusPEXUS/gojstools/webapi/blob"
+	"github.com/AnimusPEXUS/gojstools/webapi/events"
 	"github.com/AnimusPEXUS/utils/worker"
 )
 
