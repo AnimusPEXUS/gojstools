@@ -15,6 +15,7 @@ import (
 	wasmtools_arraybuffer "github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
 	wasmtools_blob "github.com/AnimusPEXUS/gojstools/webapi/blob"
 	"github.com/AnimusPEXUS/gojstools/webapi/events"
+
 	"github.com/AnimusPEXUS/utils/worker"
 )
 
