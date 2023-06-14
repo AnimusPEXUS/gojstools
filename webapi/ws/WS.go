@@ -2,6 +2,7 @@ package ws
 
 import (
 	"errors"
+	"fmt"
 	"syscall/js"
 
 	// gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
@@ -49,13 +50,18 @@ func NewWS(options *WSOptions) (*WS, error) {
 
 	if options.JSValue != nil {
 		self.JSValue = options.JSValue
-		options.URL = &([]string{self.JSValue.Get("url").String()}[0])
+		var x string = self.JSValue.Get("url").String()
+		options.URL = &x
 	} else {
 		wsoc_constr := js.Global().Get("WebSocket")
 		if wsoc_constr.IsUndefined() {
 			return nil, errors.New("WebSocket is undefined")
 		}
+		if options.URL == nil {
+			return nil, errors.New("nor existig WS specified, nor URL")
+		}
 		url := *options.URL
+		fmt.Println("NewWS url:", url)
 		wsoc := wsoc_constr.New(url, js.Undefined()) // TODO: options.Protocols
 		self.JSValue = &wsoc
 		// options.JSValue = self.JSValue
