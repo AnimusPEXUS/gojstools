@@ -2,7 +2,6 @@ package ws
 
 import (
 	"errors"
-	"fmt"
 	"syscall/js"
 
 	// gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
@@ -61,7 +60,7 @@ func NewWS(options *WSOptions) (*WS, error) {
 			return nil, errors.New("nor existig WS specified, nor URL")
 		}
 		url := *options.URL
-		fmt.Println("NewWS url:", url)
+		// fmt.Println("NewWS url:", url)
 		wsoc := wsoc_constr.New(url, js.Undefined()) // TODO: options.Protocols
 		self.JSValue = &wsoc
 		// options.JSValue = self.JSValue
