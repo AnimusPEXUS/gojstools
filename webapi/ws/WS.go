@@ -61,7 +61,10 @@ func NewWS(options *WSOptions) (*WS, error) {
 		}
 		url := *self.options.URL
 		// fmt.Println("NewWS url:", url)
-		wsoc := wsoc_constr.New(url, js.Undefined()) // TODO: options.Protocols
+		wsoc := wsoc_constr.New(
+			url,
+			js.Undefined(),
+		) // TODO: options.Protocols
 		self.JSValue = &wsoc
 		// options.JSValue = self.JSValue
 	}
