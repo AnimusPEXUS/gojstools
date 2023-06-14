@@ -36,7 +36,11 @@ type WS struct {
 	options *WSOptions
 }
 
-func NewWS(options *WSOptions) (*WS, error) {
+func NewWS(options *WSOptions) (res *WS, err error) {
+
+	defer func() {
+		err = utils_panic.PanicToError()
+	}()
 
 	if (options.JSValue == nil && options.URL == nil) ||
 		(options.JSValue != nil && options.URL != nil) {
@@ -69,7 +73,7 @@ func NewWS(options *WSOptions) (*WS, error) {
 		// options.JSValue = self.JSValue
 	}
 
-	err := self.SetOnOpen(self.options.OnOpen)
+	err = self.SetOnOpen(self.options.OnOpen)
 	if err != nil {
 		return nil, err
 	}
@@ -240,6 +244,10 @@ func (self *WS) Close(code *int, reason *string) (err error) {
 		if reason != nil {
 			args = append(args, *reason)
 		}
+		// args = append(args, js.ValueOf(*code))
+		// if reason != nil {
+		// 	args = append(args, js.ValueOf(*reason))
+		// }
 	}
 
 	self.JSValue.Call("close", args...)
