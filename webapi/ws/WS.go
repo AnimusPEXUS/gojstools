@@ -47,41 +47,41 @@ func NewWS(options *WSOptions) (*WS, error) {
 		options: options,
 	}
 
-	if options.JSValue != nil {
-		self.JSValue = options.JSValue
+	if self.options.JSValue != nil {
+		self.JSValue = self.options.JSValue
 		var x string = self.JSValue.Get("url").String()
-		options.URL = &x
+		self.options.URL = &x
 	} else {
 		wsoc_constr := js.Global().Get("WebSocket")
 		if wsoc_constr.IsUndefined() {
 			return nil, errors.New("WebSocket is undefined")
 		}
-		if options.URL == nil {
+		if self.options.URL == nil {
 			return nil, errors.New("nor existig WS specified, nor URL")
 		}
-		url := *options.URL
+		url := *self.options.URL
 		// fmt.Println("NewWS url:", url)
 		wsoc := wsoc_constr.New(url, js.Undefined()) // TODO: options.Protocols
 		self.JSValue = &wsoc
 		// options.JSValue = self.JSValue
 	}
 
-	err := self.SetOnOpen(options.OnOpen)
+	err := self.SetOnOpen(self.options.OnOpen)
 	if err != nil {
 		return nil, err
 	}
 
-	err = self.SetOnClose(options.OnClose)
+	err = self.SetOnClose(self.options.OnClose)
 	if err != nil {
 		return nil, err
 	}
 
-	err = self.SetOnMessage(options.OnMessage)
+	err = self.SetOnMessage(self.options.OnMessage)
 	if err != nil {
 		return nil, err
 	}
 
-	err = self.SetOnError(options.OnError)
+	err = self.SetOnError(self.options.OnError)
 	if err != nil {
 		return nil, err
 	}
