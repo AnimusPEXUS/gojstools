@@ -228,7 +228,22 @@ func (self *WS) SetOnError(f func(*events.ErrorEvent)) (err error) {
 	return nil
 }
 
-func (self *WS) Close(code *int, reason *string) (err error) {
+func (self *WS) Close() error {
+	return self.closeWithCodeAndReason(nil, nil)
+}
+
+func (self *WS) CloseWithCode(code int) error {
+	return self.closeWithCodeAndReason(&code, nil)
+}
+
+func (self *WS) CloseWithCodeAndReason(code int, reason string) error {
+	return self.closeWithCodeAndReason(&code, &reason)
+}
+
+func (self *WS) closeWithCodeAndReason(
+	code *int,
+	reason *string,
+) (err error) {
 	defer func() {
 		err = utils_panic.PanicToError()
 	}()

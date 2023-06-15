@@ -418,7 +418,7 @@ func (self *WSNetConn) Write(b []byte) (n int, err error) {
 }
 
 func (self *WSNetConn) Close() error {
-	return self.options.WS.Close(self.options.CloseCode, self.options.CloseReason)
+	return self.options.WS.Close()
 }
 
 func (self *WSNetConn) LocalAddr() net.Addr {
