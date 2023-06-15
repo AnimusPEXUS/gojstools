@@ -141,6 +141,27 @@ func NewArrayFromJSValue(value js.Value) (self *Array, err error) {
 	return self, nil
 }
 
+func NewArrayFromByteSlice(data []byte) (self *Array, err error) {
+	len_data := len(data)
+
+	self, err = NewArray(
+		ArrayTypeUint8,
+		js.ValueOf(len_data),
+		nil,
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	res := js.CopyBytesToJS(self.JSValue, data)
+	if res != len_data {
+		return nil, errors.New("data length doesn't match copied data size")
+	}
+
+	return self, nil
+}
+
 func (self *Array) ToString() string {
 	return self.JSValue.Call("toString").String()
 }
