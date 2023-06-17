@@ -22,7 +22,9 @@ func NewCloseEventFromJSValue(jsvalue js.Value) (*CloseEvent, error) {
 
 func (self *CloseEvent) GetCode() (ret int, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("code").Int()
 	return ret, nil
@@ -30,7 +32,9 @@ func (self *CloseEvent) GetCode() (ret int, err error) {
 
 func (self *CloseEvent) GetReason() (ret string, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("reason").String()
 	return ret, nil
@@ -38,7 +42,9 @@ func (self *CloseEvent) GetReason() (ret string, err error) {
 
 func (self *CloseEvent) GetWasClean() (ret bool, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("wasclean").Bool()
 	return ret, nil

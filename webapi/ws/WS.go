@@ -39,7 +39,9 @@ type WS struct {
 func NewWS(options *WSOptions) (res *WS, err error) {
 
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	if (options.JSValue == nil && options.URL == nil) ||
@@ -98,7 +100,9 @@ func NewWS(options *WSOptions) (res *WS, err error) {
 
 func (self *WS) SetOnOpen(f func(*events.Event)) (err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	if f == nil {
@@ -131,7 +135,9 @@ func (self *WS) SetOnOpen(f func(*events.Event)) (err error) {
 
 func (self *WS) SetOnClose(f func(*events.CloseEvent)) (err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	if f == nil {
@@ -164,7 +170,9 @@ func (self *WS) SetOnClose(f func(*events.CloseEvent)) (err error) {
 
 func (self *WS) SetOnMessage(f func(*events.MessageEvent)) (err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	if f == nil {
@@ -197,7 +205,9 @@ func (self *WS) SetOnMessage(f func(*events.MessageEvent)) (err error) {
 
 func (self *WS) SetOnError(f func(*events.ErrorEvent)) (err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	if f == nil {
@@ -245,7 +255,9 @@ func (self *WS) closeWithCodeAndReason(
 	reason *string,
 ) (err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	if reason != nil && code == nil {
@@ -268,7 +280,9 @@ func (self *WS) closeWithCodeAndReason(
 func (self *WS) Send(value js.Value) (err error) {
 	// log.Print("WS Send called")
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	state, _ := self.ReadyStateGet()
@@ -292,7 +306,9 @@ func (self *WS) Send(value js.Value) (err error) {
 
 func (self *WS) BinaryTypeGet() (ret string, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.JSValue.Get("binaryType").String()
 	return
@@ -300,7 +316,9 @@ func (self *WS) BinaryTypeGet() (ret string, err error) {
 
 func (self *WS) BinaryTypeSet(value string) (err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	self.JSValue.Set("binaryType", value)
 	return
@@ -308,7 +326,9 @@ func (self *WS) BinaryTypeSet(value string) (err error) {
 
 func (self *WS) BufferedAmountGet() (ret int, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.JSValue.Get("bufferedAmount").Int()
 	return
@@ -316,7 +336,9 @@ func (self *WS) BufferedAmountGet() (ret int, err error) {
 
 func (self *WS) ProtocolGet() (ret string, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.JSValue.Get("protocol").String()
 	return
@@ -324,7 +346,9 @@ func (self *WS) ProtocolGet() (ret string, err error) {
 
 func (self *WS) ReadyStateGet() (ret WSReadyState, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = WSReadyState(self.JSValue.Get("readyState").Int())
 	return
@@ -332,7 +356,9 @@ func (self *WS) ReadyStateGet() (ret WSReadyState, err error) {
 
 func (self *WS) URLGet() (ret string, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.JSValue.Get("url").String()
 	return

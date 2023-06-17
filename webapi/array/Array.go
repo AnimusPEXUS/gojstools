@@ -77,7 +77,9 @@ func NewArray(
 ) (self *Array, err error) {
 
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	found := false
@@ -121,7 +123,9 @@ func NewArray(
 func NewArrayFromJSValue(value js.Value) (self *Array, err error) {
 
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 
 	found := false

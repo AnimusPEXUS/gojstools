@@ -39,7 +39,9 @@ func NewMessageEventFromJSValue(jsvalue js.Value) (*MessageEvent, error) {
 // with it
 func (self *MessageEvent) GetData() (ret js.Value, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("data")
 	return ret, nil
@@ -48,7 +50,9 @@ func (self *MessageEvent) GetData() (ret js.Value, err error) {
 // TODO: testing required
 func (self *MessageEvent) GetOrigin() (ret string, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("origin").String()
 	return ret, nil
@@ -56,7 +60,9 @@ func (self *MessageEvent) GetOrigin() (ret string, err error) {
 
 func (self *MessageEvent) GetLastEventId() (ret string, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("lastEventId").String()
 	return ret, nil
@@ -65,7 +71,9 @@ func (self *MessageEvent) GetLastEventId() (ret string, err error) {
 // TODO: work required
 func (self *MessageEvent) GetSource() (ret js.Value, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("source")
 	return ret, nil
@@ -74,7 +82,9 @@ func (self *MessageEvent) GetSource() (ret js.Value, err error) {
 // TODO: work required
 func (self *MessageEvent) GetPorts() (ret js.Value, err error) {
 	defer func() {
-		err = utils_panic.PanicToError()
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
 	}()
 	ret = self.Event.JSValue.Get("ports")
 	return ret, nil
