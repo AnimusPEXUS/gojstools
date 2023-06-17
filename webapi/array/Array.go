@@ -13,18 +13,20 @@ func GetArrayJSValue(type_ ArrayType) (js.Value, error) {
 	return js.Global().Get(type_.String()), nil
 }
 
-func DetermineArrayType(v js.Value) *ArrayType {
-	ret := (*ArrayType)(nil)
+func DetermineArrayType(v js.Value) (ret ArrayType, ok bool) {
+	ret = ""
+	ok = false
 	for _, i := range ArrayTypes {
 		global_array_type := js.Global().Get(i.String())
 		if global_array_type.IsUndefined() || global_array_type.IsNull() {
 			continue
 		}
 		if v.InstanceOf(global_array_type) {
-			ret = &([]ArrayType{i}[0])
+			ret = i
+			ok = true
 		}
 	}
-	return ret
+	return
 }
 
 type ArrayType string
@@ -49,7 +51,6 @@ const (
 )
 
 var ArrayTypes = []ArrayType{
-	ArrayTypeArray,
 	ArrayTypeInt8,
 	ArrayTypeUint8,
 	ArrayTypeUint8Clamped,
@@ -61,6 +62,7 @@ var ArrayTypes = []ArrayType{
 	ArrayTypeFloat64,
 	ArrayTypeBigInt64,
 	ArrayTypeBigUint64,
+	ArrayTypeArray,
 }
 
 type Array struct {
@@ -162,6 +164,36 @@ func NewArrayFromByteSlice(data []byte) (self *Array, err error) {
 	return self, nil
 }
 
+func (self *Array) Type() (t ArrayType, ok bool) {
+	return DetermineArrayType(self.JSValue)
+}
+
 func (self *Array) ToString() string {
 	return self.JSValue.Call("toString").String()
+}
+
+func (self *Array) Length() int {
+	return self.JSValue.Get("length").Int()
+}
+
+func (self *Array) GetU8Bytes() ([]byte, error) {
+	t, ok := self.Type()
+	if !ok {
+		return nil, errors.New("invalid type")
+	}
+
+	if t != ArrayTypeUint8 {
+		return nil, errors.New("not an ArrayTypeUint8 array")
+	}
+
+	l := self.Length()
+
+	ret := make([]byte, l)
+	c_s := js.CopyBytesToGo(ret, self.JSValue)
+
+	if l != c_s {
+		return nil, errors.New("copied length misscatch")
+	}
+
+	return ret, nil
 }

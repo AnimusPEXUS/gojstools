@@ -1,16 +1,30 @@
 package events
 
 import (
+	"errors"
 	"syscall/js"
 
 	utils_panic "github.com/AnimusPEXUS/utils/panic"
 )
+
+func ValueIsInstanceOfMessageEvent(v js.Value) bool {
+	cl := js.Global().Get("MessageEvent")
+	if cl.IsUndefined() {
+		return false
+	}
+	return v.InstanceOf(cl)
+}
 
 type MessageEvent struct {
 	Event
 }
 
 func NewMessageEventFromJSValue(jsvalue js.Value) (*MessageEvent, error) {
+
+	if !ValueIsInstanceOfMessageEvent(jsvalue) {
+		return nil, errors.New("not an instance of MessageEvent")
+	}
+
 	self := &MessageEvent{}
 	r, err := NewEventFromJSValue(jsvalue)
 	if err != nil {
