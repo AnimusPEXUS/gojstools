@@ -6,6 +6,8 @@ import (
 
 	"github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
 	"github.com/AnimusPEXUS/gojstools/webapi/promise"
+
+	utils_panic "github.com/AnimusPEXUS/utils/panic"
 )
 
 var ERR_BLOB_UNSUPPORTED = errors.New("Blob unsupported")
@@ -18,21 +20,47 @@ func IsBlobSupported() bool {
 	return !GetBlobJSValue().IsUndefined()
 }
 
-func IsBlob(value js.Value) (bool, error) {
-	return value.InstanceOf(GetBlobJSValue()), nil
+func ValueIsInstanceOfBlob(v js.Value) bool {
+	cl := GetBlobJSValue()
+	if cl.IsUndefined() {
+		return false
+	}
+	return v.InstanceOf(cl)
 }
 
 type Blob struct {
 	JSValue js.Value
 }
 
-func NewBlobFromJSValue(jsvalue js.Value) (*Blob, error) {
+func NewBlobFromExistingJSBlob(jsvalue js.Value) (*Blob, error) {
+
+	if !IsBlobSupported() {
+		return nil, errors.New("Blob not supported")
+	}
+
+	if !ValueIsInstanceOfBlob(jsvalue) {
+		return nil, errors.New("not an instance of Blob")
+	}
+
 	self := &Blob{JSValue: jsvalue}
 	return self, nil
 }
 
-func (self *Blob) IsBlob() (bool, error) {
-	return IsBlob(self.JSValue)
+func NewBlobFromArray(array js.Value) (ret *Blob, err error) {
+
+	defer func() {
+		if p_err := utils_panic.PanicToError(); p_err != nil {
+			err = p_err
+		}
+	}()
+
+	if !IsBlobSupported() {
+		return nil, errors.New("Blob not supported")
+	}
+
+	res := GetBlobJSValue().New(array)
+
+	return &Blob{JSValue: res}, nil
 }
 
 func (self *Blob) Size() (int, error) {
@@ -90,11 +118,14 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 		return nil, errors.New("error getting Blob's ArrayBuffer")
 	}
 
-	return nil, errors.New("invalid behavior")
+	// return nil, errors.New("invalid behavior")
 }
 
 // TODO: maybe int64 is better solution, but I'm not sure
-func (self *Blob) Slice(start *int, end *int, contentType *string) (*Blob, error) {
+func (self *Blob) Slice(start *int, end *int, contentType *string) (
+	*Blob,
+	error,
+) {
 	start_p := js.Undefined()
 	end_p := js.Undefined()
 	contentType_p := js.Undefined()
@@ -118,7 +149,7 @@ func (self *Blob) Slice(start *int, end *int, contentType *string) (*Blob, error
 		contentType_p,
 	)
 
-	return NewBlobFromJSValue(ret_blob)
+	return NewBlobFromExistingJSBlob(ret_blob)
 }
 
 // TODO: maybe later :)
