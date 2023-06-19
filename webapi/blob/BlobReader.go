@@ -64,7 +64,9 @@ func (self *BlobReader) Read(p []byte) (n int, err error) {
 
 	arr, err := array.NewArray(
 		array.ArrayTypeUint8,
-		ab.JSValue, nil, nil,
+		ab.JSValue,
+		nil,
+		nil,
 	)
 	if err != nil {
 		return

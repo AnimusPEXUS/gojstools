@@ -7,8 +7,6 @@ import (
 
 var ERR_ARRAYBUFFER_UNSUPPORTED = errors.New("ArrayBuffer unsupported")
 
-// TODO: rename Get*JSValue functions to GetGlobal*JSValue?
-
 func GetGlobalArrayBufferJSValue() js.Value {
 	return js.Global().Get("ArrayBuffer")
 }

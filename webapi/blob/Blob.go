@@ -2,6 +2,7 @@ package blob
 
 import (
 	"errors"
+	"log"
 	"syscall/js"
 
 	"github.com/AnimusPEXUS/gojstools/std/arraybuffer"
@@ -80,8 +81,8 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 		return nil, err
 	}
 
-	psucc := make(chan bool)
-	perr := make(chan bool)
+	psucc := make(chan struct{})
+	perr := make(chan struct{})
 	var array_data js.Value
 
 	pro.Then(
@@ -91,11 +92,11 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 				args []js.Value,
 			) interface{} {
 				if len(args) == 0 {
-					perr <- true
+					perr <- struct{}{}
 					return false
 				}
 				array_data = args[0].Get("data")
-				psucc <- true
+				psucc <- struct{}{}
 				return false
 			},
 		),
@@ -105,7 +106,7 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 				this js.Value,
 				args []js.Value,
 			) interface{} {
-				perr <- true
+				perr <- struct{}{}
 				return false
 			},
 		),
@@ -113,6 +114,8 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 
 	select {
 	case <-psucc:
+		log.Println("Blob.ArrayBuffer array_data:")
+		js.Global().Get("console").Call("log", array_data)
 		return arraybuffer.NewArrayBufferFromJSValue(array_data)
 	case <-perr:
 		return nil, errors.New("error getting Blob's ArrayBuffer")
