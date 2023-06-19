@@ -45,10 +45,14 @@ func GetByteSliceFromWSMessageEventData(
 			goto next1
 		}
 
+		log.Println("Blob 1")
+
 		bl_rdr, err := bl.MakeReader()
 		if err != nil {
 			return nil, err
 		}
+
+		log.Println("Blob 2")
 
 		ret, err := ioutil.ReadAll(bl_rdr)
 		if err != nil {
@@ -67,6 +71,8 @@ next1:
 			log.Println("not Array")
 			goto next2
 		}
+
+		log.Println("Array")
 
 		ret, err := obj.GetU8Bytes()
 		if err != nil {
