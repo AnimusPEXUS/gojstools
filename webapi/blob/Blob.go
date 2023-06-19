@@ -4,8 +4,8 @@ import (
 	"errors"
 	"syscall/js"
 
-	"github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
-	"github.com/AnimusPEXUS/gojstools/webapi/promise"
+	"github.com/AnimusPEXUS/gojstools/std/arraybuffer"
+	"github.com/AnimusPEXUS/gojstools/std/promise"
 
 	utils_panic "github.com/AnimusPEXUS/utils/panic"
 )

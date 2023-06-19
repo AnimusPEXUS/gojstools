@@ -4,7 +4,7 @@ import (
 	"errors"
 	"syscall/js"
 
-	"github.com/AnimusPEXUS/gojstools/webapi/array"
+	"github.com/AnimusPEXUS/gojstools/std/array"
 	"github.com/AnimusPEXUS/gojstools/webapi/events"
 )
 

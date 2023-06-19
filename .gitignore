@@ -1,4 +1,4 @@
 *.wasm
-webapi/arraybuffer/examples/01/index/index
-webapi/arraybuffer/examples/01/index/tests.wasm
-webapi/blob/examples/01/index/index
+/std/arraybuffer/examples/01/index/index
+/std/arraybuffer/examples/01/index/tests.wasm
+/webapi/blob/examples/01/index/index

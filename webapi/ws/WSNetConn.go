@@ -11,8 +11,8 @@ import (
 	"syscall/js"
 	"time"
 
-	"github.com/AnimusPEXUS/gojstools/webapi/array"
-	wasmtools_arraybuffer "github.com/AnimusPEXUS/gojstools/webapi/arraybuffer"
+	"github.com/AnimusPEXUS/gojstools/std/array"
+	wasmtools_arraybuffer "github.com/AnimusPEXUS/gojstools/std/arraybuffer"
 	wasmtools_blob "github.com/AnimusPEXUS/gojstools/webapi/blob"
 	"github.com/AnimusPEXUS/gojstools/webapi/events"
 
@@ -330,6 +330,7 @@ func (self *WSNetConn) processNextInboundMessage() error {
 	return errors.New("unknown error")
 
 work_result:
+	// FIXME: self.read_buffer probably is nil here. testing and fixing required
 	_, err := io.Copy(self.read_buffer, re)
 	if err != nil {
 		return err

@@ -4,7 +4,7 @@ import (
 	"io"
 	"syscall/js"
 
-	"github.com/AnimusPEXUS/gojstools/webapi/array"
+	"github.com/AnimusPEXUS/gojstools/std/array"
 )
 
 var _ io.Reader = &BlobReader{}
