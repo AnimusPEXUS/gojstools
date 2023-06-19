@@ -95,7 +95,7 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 					perr <- struct{}{}
 					return false
 				}
-				array_data = args[0].Get("data")
+				array_data = args[0] // .Get("data")
 				psucc <- struct{}{}
 				return false
 			},
