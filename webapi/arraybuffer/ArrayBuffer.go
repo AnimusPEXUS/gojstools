@@ -9,16 +9,16 @@ var ERR_ARRAYBUFFER_UNSUPPORTED = errors.New("ArrayBuffer unsupported")
 
 // TODO: rename Get*JSValue functions to GetGlobal*JSValue?
 
-func GetGlobalArrayBufferJSValue()() js.Value {
+func GetGlobalArrayBufferJSValue() js.Value {
 	return js.Global().Get("ArrayBuffer")
 }
 
 func IsArrayBufferSupported() bool {
-	return !GetGlobalArrayBufferJSValue()().IsUndefined()
+	return !GetGlobalArrayBufferJSValue().IsUndefined()
 }
 
-func IsArrayBuffer(value js.Value) bool {
-	abjv := GetGlobalArrayBufferJSValue()()
+func ValueIsInstanceOfArrayBuffer(value js.Value) bool {
+	abjv := GetGlobalArrayBufferJSValue()
 	if abjv.IsUndefined() {
 		return false
 	}
@@ -36,7 +36,7 @@ func NewArrayBufferFromJSValue(jsvalue js.Value) (*ArrayBuffer, error) {
 		return nil, errors.New("ArrayBuffer not supported")
 	}
 
-	if !IsArrayBuffer(jsvalue) {
+	if !ValueIsInstanceOfArrayBuffer(jsvalue) {
 		return nil, errors.New("not an instance of ArrayBuffer")
 	}
 
@@ -50,7 +50,7 @@ func NewArrayBuffer(length int) (*ArrayBuffer, error) {
 		return nil, errors.New("ArrayBuffer not supported")
 	}
 
-	jsv_c := GetGlobalArrayBufferJSValue()()
+	jsv_c := GetGlobalArrayBufferJSValue()
 
 	jsv := jsv_c.New(length)
 

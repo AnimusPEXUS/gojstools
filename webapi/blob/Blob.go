@@ -12,16 +12,16 @@ import (
 
 var ERR_BLOB_UNSUPPORTED = errors.New("Blob unsupported")
 
-func GetGlobalBlobJSValue()() js.Value {
+func GetGlobalBlobJSValue() js.Value {
 	return js.Global().Get("Blob")
 }
 
 func IsBlobSupported() bool {
-	return !GetGlobalBlobJSValue()().IsUndefined()
+	return !GetGlobalBlobJSValue().IsUndefined()
 }
 
 func ValueIsInstanceOfBlob(v js.Value) bool {
-	cl := GetGlobalBlobJSValue()()
+	cl := GetGlobalBlobJSValue()
 	if cl.IsUndefined() {
 		return false
 	}
@@ -58,7 +58,7 @@ func NewBlobFromArray(array js.Value) (ret *Blob, err error) {
 		return nil, errors.New("Blob not supported")
 	}
 
-	res := GetGlobalBlobJSValue()().New(array)
+	res := GetGlobalBlobJSValue().New(array)
 
 	return &Blob{JSValue: res}, nil
 }

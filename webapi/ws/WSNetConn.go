@@ -296,10 +296,7 @@ func (self *WSNetConn) processNextInboundMessage() error {
 	var re io.Reader
 
 	{
-		yes, err := wasmtools_blob.IsBlob(js_data)
-		if err != nil {
-			return err
-		}
+		yes := wasmtools_blob.ValueIsInstanceOfBlob(js_data)
 
 		if yes {
 			res, err := wasmtools_blob.NewBlobFromJSValue(js_data)
@@ -315,10 +312,7 @@ func (self *WSNetConn) processNextInboundMessage() error {
 	}
 
 	{
-		yes, err := wasmtools_arraybuffer.IsArrayBuffer(js_data)
-		if err != nil {
-			return err
-		}
+		yes := wasmtools_arraybuffer.ValueIsInstanceOfArrayBuffer(js_data)
 
 		if yes {
 			res, err := wasmtools_arraybuffer.NewArrayBufferFromJSValue(js_data)
