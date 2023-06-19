@@ -2,6 +2,7 @@ package ws
 
 import (
 	"errors"
+	"runtime"
 	"syscall/js"
 
 	// gojstoolsutils "github.com/AnimusPEXUS/gojstools/utils"
@@ -53,6 +54,8 @@ func NewWS(options *WSOptions) (res *WS, err error) {
 		options: options,
 	}
 
+	runtime.SetFinalizer(self, self.finalizer)
+
 	if self.options.JSValue != nil {
 		self.JSValue = self.options.JSValue
 		var x string = self.JSValue.Get("url").String()
@@ -96,6 +99,10 @@ func NewWS(options *WSOptions) (res *WS, err error) {
 	}
 
 	return self, nil
+}
+
+func (self *WS) finalizer(t *WS) {
+	self.Close()
 }
 
 func (self *WS) SetOnOpen(f func(*events.Event)) (err error) {
@@ -260,6 +267,10 @@ func (self *WS) closeWithCodeAndReason(
 		}
 	}()
 
+	if self.JSValue.IsUndefined() {
+		return nil
+	}
+
 	if reason != nil && code == nil {
 		return errors.New("reason can't be specified without code")
 	}
@@ -274,6 +285,7 @@ func (self *WS) closeWithCodeAndReason(
 	}
 
 	self.JSValue.Call("close", args...)
+	self.JSValue = js.Undefined
 	return nil
 }
 
