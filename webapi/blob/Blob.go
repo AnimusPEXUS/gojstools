@@ -32,7 +32,7 @@ type Blob struct {
 	JSValue js.Value
 }
 
-func NewBlobFromExistingJSBlob(jsvalue js.Value) (*Blob, error) {
+func NewBlobFromJSValue(jsvalue js.Value) (*Blob, error) {
 
 	if !IsBlobSupported() {
 		return nil, errors.New("Blob not supported")
@@ -149,7 +149,7 @@ func (self *Blob) Slice(start *int, end *int, contentType *string) (
 		contentType_p,
 	)
 
-	return NewBlobFromExistingJSBlob(ret_blob)
+	return NewBlobFromJSValue(ret_blob)
 }
 
 // TODO: maybe later :)
