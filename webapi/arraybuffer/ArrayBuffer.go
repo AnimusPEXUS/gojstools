@@ -7,29 +7,21 @@ import (
 
 var ERR_ARRAYBUFFER_UNSUPPORTED = errors.New("ArrayBuffer unsupported")
 
-func GetArrayBufferJSValue() (js.Value, error) {
-	return js.Global().Get("ArrayBuffer"), nil
+func GetArrayBufferJSValue() js.Value {
+	return js.Global().Get("ArrayBuffer")
 }
 
-func IsArrayBufferSupported() (bool, error) {
-
-	abjv, err := GetArrayBufferJSValue()
-	if err != nil {
-		return false, err
-	}
-
-	undef := abjv.IsUndefined()
-
-	return !undef, nil
+func IsArrayBufferSupported() bool {
+	return !GetArrayBufferJSValue().IsUndefined()
 }
 
-func IsArrayBuffer(value js.Value) (bool, error) {
-	abjv, err := GetArrayBufferJSValue()
-	if err != nil {
-		return false, err
+func IsArrayBuffer(value js.Value) bool {
+	abjv := GetArrayBufferJSValue()
+	if abjv.IsUndefined() {
+		return false
 	}
 
-	return value.InstanceOf(abjv), nil
+	return value.InstanceOf(abjv)
 }
 
 type ArrayBuffer struct {
@@ -37,15 +29,26 @@ type ArrayBuffer struct {
 }
 
 func NewArrayBufferFromJSValue(jsvalue js.Value) (*ArrayBuffer, error) {
+
+	if !IsArrayBufferSupported() {
+		return nil, errors.New("ArrayBuffer not supported")
+	}
+
+	if !IsArrayBuffer(jsvalue) {
+		return nil, errors.New("not an instance of ArrayBuffer")
+	}
+
 	self := &ArrayBuffer{JSValue: jsvalue}
 	return self, nil
 }
 
 func NewArrayBuffer(length int) (*ArrayBuffer, error) {
-	jsv_c, err := GetArrayBufferJSValue()
-	if err != nil {
-		return nil, err
+
+	if !IsArrayBufferSupported() {
+		return nil, errors.New("ArrayBuffer not supported")
 	}
+
+	jsv_c := GetArrayBufferJSValue()
 
 	jsv := jsv_c.New(length)
 
@@ -55,10 +58,6 @@ func NewArrayBuffer(length int) (*ArrayBuffer, error) {
 	}
 
 	return self, nil
-}
-
-func (self *ArrayBuffer) IsArrayBuffer() (bool, error) {
-	return IsArrayBuffer(self.JSValue)
 }
 
 func (self *ArrayBuffer) Len() (int, error) {
