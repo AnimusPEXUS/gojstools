@@ -2,9 +2,11 @@ package ws
 
 import (
 	"errors"
+	"io/ioutil"
 	"syscall/js"
 
 	"github.com/AnimusPEXUS/gojstools/std/array"
+	"github.com/AnimusPEXUS/gojstools/webapi/blob"
 	"github.com/AnimusPEXUS/gojstools/webapi/events"
 )
 
@@ -35,10 +37,32 @@ func GetByteSliceFromWSMessageEventData(
 ) {
 
 	{
-		obj, err := array.NewArrayFromJSValue(event_data)
+		bl, err := blob.NewBlobFromJSValue(event_data)
 
 		if err != nil {
 			goto next1
+		}
+
+		bl_rdr, err := bl.MakeReader()
+		if err != nil {
+			return nil, err
+		}
+
+		ret, err := ioutil.ReadAll(bl_rdr)
+		if err != nil {
+			return nil, err
+		}
+
+		return ret, nil
+	}
+
+next1:
+
+	{
+		obj, err := array.NewArrayFromJSValue(event_data)
+
+		if err != nil {
+			goto next2
 		}
 
 		ret, err := obj.GetU8Bytes()
@@ -49,19 +73,7 @@ func GetByteSliceFromWSMessageEventData(
 		return ret, nil
 	}
 
-next1:
-
-	// 	{
-	// 		_, err := blob.NewBlobFromJSValue(event_data)
-
-	// 		if err != nil {
-	// 			goto next2
-	// 		}
-
-	// 		return ret, nil
-	// 	}
-
-	// next2:
+next2:
 
 	return nil, errors.New("couldn't determine event.data type")
 }
