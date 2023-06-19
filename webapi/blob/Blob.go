@@ -2,7 +2,6 @@ package blob
 
 import (
 	"errors"
-	"log"
 	"syscall/js"
 
 	"github.com/AnimusPEXUS/gojstools/std/arraybuffer"
@@ -114,8 +113,6 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 
 	select {
 	case <-psucc:
-		log.Println("Blob.ArrayBuffer array_data:")
-		js.Global().Get("console").Call("log", array_data)
 		return arraybuffer.NewArrayBufferFromJSValue(array_data)
 	case <-perr:
 		return nil, errors.New("error getting Blob's ArrayBuffer")
