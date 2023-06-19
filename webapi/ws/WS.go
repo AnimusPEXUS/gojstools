@@ -33,7 +33,7 @@ type WSOptions struct {
 }
 
 type WS struct {
-	JSValue *js.Value
+	JSValue js.Value
 	options *WSOptions
 }
 
@@ -57,7 +57,7 @@ func NewWS(options *WSOptions) (res *WS, err error) {
 	runtime.SetFinalizer(self, self.finalizer)
 
 	if self.options.JSValue != nil {
-		self.JSValue = self.options.JSValue
+		self.JSValue = *self.options.JSValue
 		var x string = self.JSValue.Get("url").String()
 		self.options.URL = &x
 	} else {
@@ -74,7 +74,7 @@ func NewWS(options *WSOptions) (res *WS, err error) {
 			url,
 			js.Undefined(),
 		) // TODO: options.Protocols
-		self.JSValue = &wsoc
+		self.JSValue = wsoc
 		// options.JSValue = self.JSValue
 	}
 
@@ -285,7 +285,7 @@ func (self *WS) closeWithCodeAndReason(
 	}
 
 	self.JSValue.Call("close", args...)
-	self.JSValue = js.Undefined
+	self.JSValue = js.Undefined()
 	return nil
 }
 
