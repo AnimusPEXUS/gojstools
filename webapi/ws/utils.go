@@ -3,6 +3,7 @@ package ws
 import (
 	"errors"
 	"io/ioutil"
+	"log"
 	"syscall/js"
 
 	"github.com/AnimusPEXUS/gojstools/std/array"
@@ -40,6 +41,7 @@ func GetByteSliceFromWSMessageEventData(
 		bl, err := blob.NewBlobFromJSValue(event_data)
 
 		if err != nil {
+			log.Println("not Blob")
 			goto next1
 		}
 
@@ -62,6 +64,7 @@ next1:
 		obj, err := array.NewArrayFromJSValue(event_data)
 
 		if err != nil {
+			log.Println("not Array")
 			goto next2
 		}
 
