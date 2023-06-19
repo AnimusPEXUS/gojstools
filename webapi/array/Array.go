@@ -9,7 +9,7 @@ import (
 
 var ERR_ARRAY_UNSUPPORTED = errors.New("Array unsupported")
 
-func GetArrayJSValue(type_ ArrayType) (js.Value, error) {
+func GetGlobalArrayJSValue()(type_ ArrayType) (js.Value, error) {
 	return js.Global().Get(type_.String()), nil
 }
 
