@@ -10,8 +10,6 @@ import (
 	utils_panic "github.com/AnimusPEXUS/utils/panic"
 )
 
-var ERR_BLOB_UNSUPPORTED = errors.New("Blob unsupported")
-
 func GetGlobalBlobJSValue() js.Value {
 	return js.Global().Get("Blob")
 }
@@ -84,7 +82,7 @@ func (self *Blob) ArrayBuffer() (*arraybuffer.ArrayBuffer, error) {
 	perr := make(chan struct{})
 	var array_data js.Value
 
-	pro.Then(
+	pro.Then2(
 		js.FuncOf(
 			func(
 				this js.Value,
