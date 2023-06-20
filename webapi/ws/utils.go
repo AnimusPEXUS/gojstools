@@ -3,6 +3,7 @@ package ws
 import (
 	"errors"
 	"io/ioutil"
+	"log"
 	"syscall/js"
 
 	"github.com/AnimusPEXUS/gojstools/std/array"
@@ -52,6 +53,8 @@ func GetByteSliceFromWSMessageEventData(
 		if err != nil {
 			return nil, err
 		}
+
+		log.Println("blob ReadAll result:", ret, string(ret))
 
 		return ret, nil
 	}
