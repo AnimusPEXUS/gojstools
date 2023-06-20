@@ -52,7 +52,7 @@ func (self *BlobReader) Read(p []byte) (n int, err error) {
 	{
 		self_start_index_p_lenp := self.start_index + len_p
 		if self_start_index_p_lenp > self.lenght {
-			end_index = self.lenght - 1
+			end_index = self.lenght
 			self.EOF = true
 		} else {
 			end_index = self_start_index_p_lenp
