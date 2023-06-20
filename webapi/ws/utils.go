@@ -44,18 +44,21 @@ func GetByteSliceFromWSMessageEventData(
 			goto next1
 		}
 
-		log.Println("exit 111")
-		return nil, errors.New("debug error")
-
 		bl_rdr, err := bl.MakeReader()
 		if err != nil {
 			return nil, err
 		}
 
+		log.Println("exit 222")
+		return nil, errors.New("debug error")
+
 		ret, err := ioutil.ReadAll(bl_rdr)
 		if err != nil {
 			return nil, err
 		}
+
+		log.Println("exit 333")
+		return nil, errors.New("debug error")
 
 		return ret, nil
 	}
