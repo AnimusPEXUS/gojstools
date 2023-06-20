@@ -49,9 +49,6 @@ func GetByteSliceFromWSMessageEventData(
 			return nil, err
 		}
 
-		log.Println("exit 222")
-		return nil, errors.New("debug error")
-
 		ret, err := ioutil.ReadAll(bl_rdr)
 		if err != nil {
 			return nil, err
