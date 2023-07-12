@@ -35,7 +35,7 @@ func (self *DOMImplementation) CreateDocumentType(qualifiedNameStr string, publi
 	return NewDocumentTypeFromJsValue(r)
 }
 
-func (self *DOMImplementation) CreateHTMLDocument(qualifiedNameStr string, publicId string, systemId string) *Document {
-	r := self.JSValue.Call("createHTMLDocumentType", qualifiedNameStr, publicId, systemId)
+func (self *DOMImplementation) CreateHTMLDocument(title string) *Document {
+	r := self.JSValue.Call("createHTMLDocument", title)
 	return NewDocumentFromJsValue(r)
 }
