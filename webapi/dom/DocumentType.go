@@ -5,11 +5,11 @@ import (
 )
 
 type DocumentType struct {
-	JSValue js.Value
+	Node
 }
 
 func NewDocumentTypeFromJsValue(jsvalue js.Value) *DocumentType {
 	// TODO: input check?
-	self := &DocumentType{jsvalue}
+	self := &DocumentType{Node{jsvalue}}
 	return self
 }
