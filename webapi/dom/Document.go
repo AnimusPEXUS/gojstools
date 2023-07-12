@@ -13,6 +13,10 @@ func NewDocumentFromJsValue(jsvalue js.Value) *Document {
 	return self
 }
 
+func (self *Document) Implementation() *DOMImplementation {
+	return NewDOMImplementationFromJSValue(self.JSValue.Get("implementation"))
+}
+
 func (self *Document) CreateElementNS(ns string, name string) *Element {
 	return &Element{
 		&Node{

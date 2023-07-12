@@ -14,12 +14,10 @@ type DOMImplementation struct {
 	JSValue js.Value
 }
 
-func NewDOMImplementationFromGlobal() *DOMImplementation {
+func NewDOMImplementationFromJSValue(val js.Value) *DOMImplementation {
+	// TODO: input check
 	self := new(DOMImplementation)
-	self.JSValue = GetGlobalDOMImplementationJSValue()
-	if self.JSValue.IsUndefined() {
-		return nil
-	}
+	self.JSValue = val
 	return self
 }
 
