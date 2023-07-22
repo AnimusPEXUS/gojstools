@@ -16,7 +16,7 @@ import (
 	wasmtools_blob "github.com/AnimusPEXUS/gojstools/webapi/blob"
 	"github.com/AnimusPEXUS/gojstools/webapi/events"
 
-	"github.com/AnimusPEXUS/utils/worker"
+	"github.com/AnimusPEXUS/goworker"
 )
 
 type EmptyStruct struct{}
@@ -48,14 +48,14 @@ type WSNetConn struct {
 
 	inbound_messages       []js.Value
 	inbound_messages_mutex sync.Mutex
-	inbound_worker         *worker.Worker
+	inbound_worker         *goworker.Worker
 	inbound_signal         chan EmptyStruct
 	// outbound_messages       []js.Value
 	// outbound_messages_mutex sync.Mutex
-	// outbound_worker         *worker.Worker
+	// outbound_worker         *goworker.Worker
 	// outbound_signal         chan EmptyStruct
 
-	central_worker *worker.Worker
+	central_worker *goworker.Worker
 
 	// isopen bool
 
@@ -72,9 +72,9 @@ func NewWSNetConn(options *WSNetConnOptions) *WSNetConn {
 		// outbound_signal:   make(chan EmptyStruct),
 	}
 
-	self.inbound_worker = worker.New(self.inboundWorkerThread)
-	// self.outbound_worker = worker.New(self.outboundWorkerThread)
-	self.central_worker = worker.New(self.centralWorkerThread)
+	self.inbound_worker = goworker.New(self.inboundWorkerThread)
+	// self.outbound_worker = goworker.New(self.outboundWorkerThread)
+	self.central_worker = goworker.New(self.centralWorkerThread)
 
 	return self
 }
@@ -149,7 +149,7 @@ func (self *WSNetConn) onError(event *events.ErrorEvent) {
 	}
 }
 
-func (self *WSNetConn) GetWorker() worker.WorkerI {
+func (self *WSNetConn) GetWorker() goworker.WorkerI {
 	return self.central_worker
 }
 
@@ -258,8 +258,8 @@ func (self *WSNetConn) centralWorkerThread(
 	set_starting()
 	defer func() {
 		set_stopping()
-		s1 := make(chan worker.WorkerControlChanResult)
-		s2 := make(chan worker.WorkerControlChanResult)
+		s1 := make(chan goworker.WorkerControlChanResult)
+		s2 := make(chan goworker.WorkerControlChanResult)
 		go func() { s1 <- self.inbound_worker.Stop() }()
 		// go func() { s2 <- self.outbound_worker.Stop() }()
 		<-s1
@@ -268,8 +268,8 @@ func (self *WSNetConn) centralWorkerThread(
 	}()
 
 	{
-		s1 := make(chan worker.WorkerControlChanResult)
-		s2 := make(chan worker.WorkerControlChanResult)
+		s1 := make(chan goworker.WorkerControlChanResult)
+		s2 := make(chan goworker.WorkerControlChanResult)
 		go func() { s1 <- self.inbound_worker.Start() }()
 		// go func() { s2 <- self.outbound_worker.Start() }()
 		<-s1

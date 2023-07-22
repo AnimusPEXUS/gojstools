@@ -1,2 +1,6 @@
-github.com/AnimusPEXUS/utils v0.0.0-20230615004702-c6d6bfd8bb84 h1:6iGJfOefydaibqTSY5itHXHbFnMRehyVdhHqlVOV1iw=
-github.com/AnimusPEXUS/utils v0.0.0-20230615004702-c6d6bfd8bb84/go.mod h1:wTxCjTsBHYrK2WnlmHOol35DyP1Eh0wsa59KAMp32+U=
+github.com/AnimusPEXUS/golockercheckable v0.0.0-20230720142101-c18c8d2e2212 h1:FlnUY8A7jNNoQqgMPOHB1QuMtC9+1DALw+SHM19v3CA=
+github.com/AnimusPEXUS/golockercheckable v0.0.0-20230720142101-c18c8d2e2212/go.mod h1:JKRD/6+u2NdqZ4DG7LSXue5joMEUN9kbY0UYgejE6s4=
+github.com/AnimusPEXUS/goworker v0.0.0-20230722022549-6b2d4e08cd4e h1:x0V4qvEB5mZaPEBpnKemvZc2GRSmnJDOQQgY9/dpV2w=
+github.com/AnimusPEXUS/goworker v0.0.0-20230722022549-6b2d4e08cd4e/go.mod h1:vQbiUqXGjWIDbMZrXWy222rzXoYWZXmLaKgaRc2iHB4=
+github.com/AnimusPEXUS/utils v0.0.0-20230722022734-4e6b1e96c0b1 h1:fbugKc8k50vfIvJGzztDRiHR796PzMdMfzH6a4szjtc=
+github.com/AnimusPEXUS/utils v0.0.0-20230722022734-4e6b1e96c0b1/go.mod h1:wTxCjTsBHYrK2WnlmHOol35DyP1Eh0wsa59KAMp32+U=
